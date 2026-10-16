@@ -1,0 +1,144 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Una sorpresa para ti ♡</title>
+<style>
+:root {
+  --bg:#fff5f8; --card:#fff; --text:#382532;
+  --muted:#856b7b; --pink:#c83e75; --soft:#ffe1ec;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; font-family:system-ui,-apple-system,sans-serif;
+  background:linear-gradient(150deg,#ffe3ed,#fff8f3 60%);
+  color:var(--text);
+}
+main { max-width:620px; margin:auto; padding:32px 18px 45px; }
+.kicker { color:var(--pink); font-size:.75rem; font-weight:800; letter-spacing:.15em; text-transform:uppercase; }
+h1 { font-size:clamp(2.2rem,8vw,3.5rem); line-height:1.05; margin:14px 0; }
+p { line-height:1.65; color:var(--muted); }
+.card { background:var(--card); border:1px solid #f0d6e0; border-radius:24px; padding:25px; box-shadow:0 15px 45px #a64b7115; }
+.heart { font-size:2.2rem; }
+.progress { display:flex; gap:8px; margin:22px 0; }
+.progress span { height:5px; flex:1; border-radius:8px; background:#f0dce4; }
+.progress .on { background:var(--pink); }
+.question { font-size:1.35rem; font-weight:750; color:var(--text); }
+label { font-size:.85rem; }
+input { width:100%; padding:15px; margin-top:8px; border:1px solid #e8cbd8; border-radius:13px; font-size:1.1rem; }
+button { border:0; border-radius:13px; padding:14px 18px; background:var(--pink); color:white; font-size:1rem; font-weight:750; cursor:pointer; min-height:48px; }
+button.secondary { background:var(--soft); color:var(--text); }
+.actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:15px; }
+.feedback { min-height:26px; color:var(--pink); font-weight:650; }
+.hidden { display:none !important; }
+.ticket { margin-top:22px; border:2px dashed var(--pink); border-radius:18px; overflow:hidden; }
+.ticket-top { background:var(--soft); padding:23px; }
+.ticket-top h2 { font-size:2.5rem; margin:8px 0; line-height:1; }
+.ticket-body { padding:22px; }
+.ticket-label { color:var(--pink); font-size:.75rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+.tour-photo { width:100%; display:block; border-radius:14px; margin-bottom:18px; }
+.small { font-size:.8rem; }
+a { color:var(--pink); font-weight:700; }
+</style>
+</head>
+<body>
+<main>
+  <div class="kicker">Una pequeña misión para ti</div>
+  <div class="heart">♡</div>
+  <h1>Hay una sorpresa<br>esperándote.</h1>
+  <p>Resuelve estas dos operaciones facilitas y desbloquea tu regalo. ¡Confía en ti! ✨</p>
+
+  <section id="quiz" class="card">
+    <div class="progress"><span id="p1" class="on"></span><span id="p2"></span></div>
+    <div id="stepLabel" class="kicker">Reto 1 de 2</div>
+    <div id="question" class="question">¿Cuánto es 7 + 5?</div>
+    <label for="answer">Tu respuesta</label>
+    <input id="answer" inputmode="numeric" autocomplete="off" placeholder="Escribe el resultado">
+    <div class="actions"><button id="checkAnswer">Comprobar respuesta</button></div>
+    <p id="feedback" class="feedback" role="status"></p>
+  </section>
+
+  <section id="reveal" class="hidden">
+    <div class="card">
+      <div class="heart">💌</div>
+      <div class="kicker">¡Lo has desbloqueado!</div>
+      <h1>Tu regalo es…</h1>
+      <p>Una experiencia para disfrutar y recordar juntos. ❤️</p>
+      <div class="ticket">
+        <div class="ticket-top">
+          <div class="ticket-label">Entrada regalo</div>
+          <h2>LUCHO RK</h2>
+          <div>✦ SORDO DE UN PIE TOUR ✦</div>
+        </div>
+        <div class="ticket-body">
+          <img class="tour-photo"
+            src="https://www.roigarena.com/media/images/Lucho_RK_Sordo_de_un_Pie_Tour.original.jpg"
+            alt="Cartel de Lucho RK"
+            onerror="this.style.display='none'">
+          <div class="ticket-label">Invitación especial · Valencia</div>
+          <p style="color:var(--text);font-weight:750">¡Tienes una entrada regalo para ver a Lucho RK en Valencia!</p>
+          <p>📍 Sala Auditorio Roig Arena<br>📅 Viernes, 30 de abril de 2027</p>
+          <p>Prepárate para cantar, disfrutar y vivir una noche increíble conmigo. ❤️</p>
+          <div style="border-top:1px solid #f0d6e0;padding-top:14px">
+            Con cariño, para ti ♡<br>
+            <span class="small">Esta es una invitación-regalo simbólica, no una entrada oficial.</span>
+          </div>
+          <p><a href="https://www.roigarena.com/es/noticias/lucho-rk-actuara-30-abril-sala-auditorio-roig-arena/" target="_blank" rel="noopener">Ver información oficial ↗</a></p>
+          <p><a href="https://www.entradas.com/artist/lucho-rk/?inApp=true" target="_blank" rel="noopener">Consultar entradas ↗</a></p>
+        </div>
+      </div>
+      <div class="actions"><button class="secondary" id="restart">Volver a empezar</button></div>
+    </div>
+  </section>
+  <p class="small" style="text-align:center;margin-top:22px">Hecho con cariño, solo para ti ♡</p>
+</main>
+<script>
+const challenges = [
+  {q:'¿Cuánto es 7 + 5?', a:12},
+  {q:'¿Cuánto es 3 × 4?', a:12}
+];
+let current = 0;
+const input = document.getElementById('answer');
+const feedback = document.getElementById('feedback');
+
+function render() {
+  document.getElementById('stepLabel').textContent =
+    `Reto ${current + 1} de ${challenges.length}`;
+  document.getElementById('question').textContent = challenges[current].q;
+  document.getElementById('p1').classList.toggle('on', current === 0);
+  document.getElementById('p2').classList.toggle('on', current === 1);
+  input.value = '';
+  feedback.textContent = '';
+  input.focus();
+}
+function checkAnswer() {
+  const value = input.value.trim();
+  if (value === '' || !Number.isFinite(Number(value)) ||
+      Number(value) !== challenges[current].a) {
+    feedback.textContent = '¡Casi! Prueba otra vez 💗';
+    return;
+  }
+  if (current < challenges.length - 1) {
+    current++;
+    render();
+  } else {
+    document.getElementById('quiz').classList.add('hidden');
+    document.getElementById('reveal').classList.remove('hidden');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+}
+document.getElementById('checkAnswer').addEventListener('click', checkAnswer);
+input.addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkAnswer();
+});
+document.getElementById('restart').addEventListener('click', () => {
+  current = 0;
+  document.getElementById('reveal').classList.add('hidden');
+  document.getElementById('quiz').classList.remove('hidden');
+  render();
+});
+</script>
+</body>
+</html>
